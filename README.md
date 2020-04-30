@@ -86,3 +86,23 @@ return (
     }}
 />
 ```
+
+## Buttons
+React Native has 2 kinds of buttons
+1. **Button**: Simple button with low customization.
+```jsx
+<Button
+title="Go to components demo"
+onPress={() => console.log('Buttom pressed')}
+/>
+```
+
+2. **TouchableOpacity**: Highly customizable. It can detect a press on almost any kind of element.
+```jsx
+<TouchableOpacity
+onPress={() => console.log('Touchable opacity pressed')}
+>
+    <Text>Go to list demo</Text>
+    <Text>Go to list demo</Text>
+</TouchableOpacity>
+```
