@@ -106,3 +106,18 @@ onPress={() => console.log('Touchable opacity pressed')}
     <Text>Go to list demo</Text>
 </TouchableOpacity>
 ```
+
+## Navigation
+React router passes a props object to every page loaded.
+```jsx
+const HomeScreen = props => {
+  console.log(props.navigation);
+```
+
+```props.navigation``` is used to navigate from one page to another.
+```jsx
+<Button
+    title="Go to components demo"
+    onPress={() => props.navigation.navigate('Components')}
+/>
+```
