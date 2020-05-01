@@ -1,32 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { Text, StyleSheet, View, Button } from "react-native";
 
-const CounterScreen = (props) => {
-    //todo: fix this
-    // let counter = 0;
+/**
+ *
+ * @param {*} state === {counter: 0}
+ * @param {*} action === {type: 'increment_counter', payload: 1}
+ */
+const reducer = (state, action) => {
+    switch(action.type){
+        case 'increment_counter':
+            return { ...state, counter: state.counter + action.payload }
+        case 'decrement_counter':
+            return { ...state, counter: state.counter - action.payload }
+        default:
+            return state;
+    }
+}
 
-    const [counter, setCounter] = useState(0);
-    //entire component is re-run when setCounter is used.
+const CounterScreen = (props) => {
+    const [state, dispatch] = useReducer(reducer, { counter: 0 });
     return (
         <View>
             <Button title="increase"
                 onPress={() => {
-                    //don't do this. React doesn't detect change automatically.
-                    // counter++;
-                    setCounter(counter + 1);
-                    console.log(counter);
+                    dispatch({
+                        type: 'increment_counter',
+                        payload: 1
+                    })
+                    console.log(state.counter);
                 }}
             />
             <Button title="decrease"
                 onPress={() => {
-                    // counter--;
-                    setCounter(counter - 1);
-                    console.log(counter);
+                    dispatch({
+                        type: 'decrement_counter',
+                        payload: 1
+                    })
+                    console.log(state.counter);
                 }}
             />
-            <Text>Current count: {counter}</Text>
+            <Text>Current count: {state.counter}</Text>
         </View>
-
     );
 }
 
