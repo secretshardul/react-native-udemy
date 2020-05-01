@@ -298,3 +298,25 @@ To read state
 { type: 'change_red', payload: 15 }
 ```
 
+# Layout
+React native has 3 layout models
+1. **Box object model**:
+    - Specify height and width of element along with spacing.
+    - Used for single element.
+2. **Flexbox**:
+    - How multiple sibling elements are positioned inside a parent.
+    - To position multiple elements in a common parent.
+3. **Position**:
+    - How a single element is positioned inside a parent.
+    - Used to override box object model and flexbox model.
+
+## Box object model
+![](images/2020-05-01-22-47-04.png)
+padding -> border -> margin
+
+1. **Padding**(space inside border): paddingTop, paddingBottom, paddingLeft, PaddingRight
+2. **Border**(the dark line): borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth
+3. **Margin**(space outside border): marginTop, marginBottom, marginLeft, marginRight
+
+
+
