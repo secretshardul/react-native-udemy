@@ -121,3 +121,108 @@ const HomeScreen = props => {
     onPress={() => props.navigation.navigate('Components')}
 />
 ```
+
+# State management
+- State system is used to track data which will change over time. On other hand, props are used to pass data from parent to a child.
+- React doesn't automatically update view when variable values are changed.
+    ```jsx
+    const CounterScreen = (props) => {
+        let counter = 0;
+        return (
+            <View>
+                <Button title="increase"
+                    onPress={() => {
+                        counter++;
+                        console.log(counter);
+                    }}
+                />
+                <Button title="decrease"
+                    onPress={() => {
+                        counter--;
+                        console.log(counter);
+                    }}
+                />
+                <Text>Current count: {counter}</Text>
+            </View>
+
+        );
+    }
+    ```
+    Here ```counter``` value gets updated but this is not displayed  to user.
+
+## React hooks for state management
+```useState``` hook allows React to observe changes so they can be rendered to the view.
+```jsx
+import React, { useState } from "react";
+
+const CounterScreen = (props) => {
+
+    const [counter, setCounter] = useState(0); //initial value 0
+    //entire component is re-run when setCounter is used.
+    return (
+        <View>
+            <Button title="increase"
+                onPress={() => {
+                    setCounter(counter + 1);
+                    console.log(counter);
+                }}
+            />
+            <Button title="decrease"
+                onPress={() => {
+                    setCounter(counter - 1);
+                    console.log(counter);
+                }}
+            />
+            <Text>Current count: {counter}</Text>
+        </View>
+
+    );
+}
+```
+
+Properties
+1. React cannot detect direct changes to the state variable. Use the setter function.
+```js
+setCounter(count + 1);
+```
+2. Any type of data which changes over time can be tracked: int, string, array etc.
+3. When a component is rerendered, all its children get rerendered.
+4. A state variable can be passed to a child component as props.
+5. Each copy of a component has its own separate state variables.
+
+## State management in a hierarchy of components
+1. Where to create state variables?
+
+    Create  state variables in the most parent component which needs to read/write on that state value.
+
+    Create state variables for red, blue and green colors in SquareScreen instead of ColorCounter.
+
+2. How to pass state variables from parent to child?
+    1. When child only needs to read, pass value directly through props.
+    ```js
+    {value: 'red'}
+    ```
+    2. When child needs to write, pass a callback function through props.
+    ```js
+    {onChange: () => {}}
+    ```
+    Example:
+    - Passing callback as props
+        ```jsx
+        <ColorCounter color="red"
+            onIncrease={() => setColor('red', COLOR_INCREMENT)}
+            onDecrease={() => setColor('red', -1 * COLOR_INCREMENT)}
+        />
+        ```
+    - Executing callback
+        ```jsx
+        const ColorCounter = ({ color, onIncrease, onDecrease }) => {
+            return (
+                <View>
+                    <Text>{ color }</Text>
+                    <Button
+                        title={`increase ${ color }`}
+                        onPress={() => onIncrease()} //callback function called
+                    />
+        ```
+
