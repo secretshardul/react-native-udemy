@@ -225,6 +225,16 @@ setCounter(count + 1);
                         onPress={() => onIncrease()} //callback function called
                     />
         ```
+## Reading text
+In React we do not read a child component's data in a parent component. Instead we create a state variable in the parent which is modified by the child component.
+```jsx
+    const [name, setName] = useState('');
+    return (
+        <TextInput
+            value={name}
+            onChangeText = {newValue => setName(newValue)}
+        />
+```
 
 ## Reducers
 - Better alternative to ```useState``` for complex state logic. It gets called with 2 objects
