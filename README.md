@@ -243,6 +243,14 @@ In React we do not read a child component's data in a parent component. Instead 
 - State object is not modified directly.
 - Value returned by reducer serves as new state.
 
+#### Syntax
+```jsx
+const reducer = (state, action) => {}
+
+const [state, dispatch] = useReducer(reducer, initialState)
+```
+
+
 **Example**:
 
 3 ```setState``` hooks for red, green and blue can be replaced by a single reducer.
