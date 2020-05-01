@@ -226,3 +226,57 @@ setCounter(count + 1);
                     />
         ```
 
+## Reducers
+- Better alternative to ```useState``` for complex state logic. It gets called with 2 objects
+    1. **state**: contains current state
+    2. **action**: Describes what update we want to make. We look at this object to decide how to change state.
+- State object is not modified directly.
+- Value returned by reducer serves as new state.
+
+**Example**:
+
+3 ```setState``` hooks for red, green and blue can be replaced by a single reducer.
+```jsx
+const reducer = (state, action) => {
+    switch (action.colorToChange) {
+        case 'red':
+            return { ...state, red: state.red + action.amount }
+        case 'green':
+            return { ...state, green: state.green + action.amount }
+        case 'blue':
+            return { ...state, blue: state.blue + action.amount }
+    }
+}
+
+const SquareScreen = (props) => {
+
+    const [state, dispatch] = useReducer(reducer, { red: 0, green: 0, blue: 0 });
+```
+
+To change state
+```jsx
+<ColorCounter color="red"
+    onIncrease={() => dispatch({
+        colorToChange: 'red', amount: COLOR_INCREMENT
+    })}
+```
+
+To read state
+```jsx
+<View style = {{
+    height: 150,
+    width: 150,
+    backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`
+}}/>
+```
+
+## Community convention for reducers
+```action``` and ```dispatch``` should be of format
+```js
+//our code
+{ colorToChange: 'red', amount: 15 }
+
+//convention
+{ type: 'change_red', payload: 15 }
+```
+
