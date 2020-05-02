@@ -393,3 +393,12 @@ React native has provided a shortcut to achieve these together.
 1. Apply box object model rules.
 2. If position is relative, apply flexbox rules.
 3. Finally apply absolute position rules.
+
+# React navigation
+![](images/react-natigation-types.png)
+
+React navigation comes in 3 modes
+1. **Drawer navigator**: Drawer to the side
+2. **BottomTabNavigator**
+3. **StackNavigator**: Automatically shows back arrow for screens.
+
