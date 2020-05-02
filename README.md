@@ -304,7 +304,7 @@ React native has 3 layout models
     - Specify height and width of element along with spacing.
     - Used for single element.
 2. **Flexbox**:
-    - How multiple sibling elements are positioned inside a parent.
+    - How multiple sibling elements are laid inside a parent.
     - To position multiple elements in a common parent.
 3. **Position**:
     - How a single element is positioned inside a parent.
@@ -318,5 +318,41 @@ padding -> border -> margin
 2. **Border**(the dark line): borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth
 3. **Margin**(space outside border): marginTop, marginBottom, marginLeft, marginRight
 
+## Flexbox
+1. **flexDirection**:
+    - Tells whether to lay children vertically(column wise) or horizontally(row wise).
+    - 'column'(default), 'row'
 
+    ![](images/flexdirection-with-alignItems.png)
+
+2. **alignItems**:
+    - Aligns items perpendicular to flexbox direction. Eg. if flexDirection is column then it will align contents horizontally.
+    - 'stretch'(default), 'flex-start', 'flex-start', 'center', 'flex-end'.
+
+    ![](images/alignItems-center.png)
+    ```alignItems: 'center'```
+
+3. **justifyContent**:
+    - Opposite of **alignItems**.It justifies content along the same direction as **flexDirection**. Eg. if flexDirection is column then it will justify contents vertically.
+    - 'flex-start', 'center', 'flex-end', 'space-between'(not at ends), 'space-around'(at ends also), 'space-evenly'(even space between elements and at ends)
+
+    ![](images/justifyContent-center.png)
+    ```justifyContent: 'center'```
+
+4. **flex**: It makes a component flexible.
+    - ```flex: 0```(default): COmponent is sized based on its width and height.
+    - Flex is a positive number: Sized proportional to its flex value. When a single element has a positive flex value among other sibling components, it occupies all remaining space of the parent. A component with ```flex``` set to 2 will take twice the space as a component with ```flex``` set to 1.
+
+    ![](images/no-flex.png)
+    No flex
+
+    ![](images/child1-flex-1.png)
+    Child 1 has ```flex: 1```
+
+    ![](images/child2-flex-2.png)
+    Child 2 has ```flex: 2``` and child 1 has ```flex: 1```
+
+5. **alignSelf**: Overrides ```alignItem``` for the specified item.
+    ![](images/alignSelf-child1.png)
+    ```alignSelf: 'flex-end'``` for child 1
 
