@@ -356,3 +356,40 @@ padding -> border -> margin
     ![](images/alignSelf-child1.png)
     ```alignSelf: 'flex-end'``` for child 1
 
+## Position
+Used to override other layout models.
+1. ```position: 'absolute'```: causes an element to be ignored by siblings. But some flexbox rules still apply.
+    ![](images/position.png)
+    Flexbox effect
+
+    ![](images/position-absolute-child1.png)
+    Abolute position set for child 1. It gets ignored and overwritten by other elements of flexbox.
+
+2. ```top```, ```bottom```, ```left```, ```right```: Displaces an element for the specified units from the top/bottom/left/right of parent container. This element can move over other elements.
+    ![](images/child2-top.png)
+    ```top: 8``` for child 2 causes it to move down over child 3
+
+## Completely filling parent with a child
+This is a commonly needed pattern.
+1. Set ```position``` to absolute.
+2. Set ```top```, ```bottom```, ```left``` and ```right``` values to 0 so component sticks to the parent's boundaries.
+
+```jsx
+position: "absolute",
+top: 0,
+bottom: 0,
+left: 0,
+right: 0
+```
+![](images/absolute-fill.png)
+
+
+React native has provided a shortcut to achieve these together.
+```jsx
+...StyleSheet.absoluteFillObject
+```
+
+## Positioning guidelines
+1. Apply box object model rules.
+2. If position is relative, apply flexbox rules.
+3. Finally apply absolute position rules.
