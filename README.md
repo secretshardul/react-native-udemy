@@ -422,6 +422,36 @@ React native has provided a shortcut to achieve these together.
 2. If position is relative, apply flexbox rules.
 3. Finally apply absolute position rules.
 
+## Advanced layout techniques
+1. ```<ScrollView>```: Used to enable scrolling.
+2. Fix when some content goes off screen and is not scrollable:
+    1. Set ```flex: 1``` to make content flex across the parent view.
+        ```jsx
+        <View style={{ flex: 1 }}>
+            <SearchBar
+                term={term}
+                onTermChange={setTerm}
+                onTermSubmit={() => searchApi(term)}
+            />
+            {errorMessage ? <Text>Something went wrong</Text> : null}
+            <Text>We have found {results.length} results</Text>
+
+            <ScrollView>
+                <ResultsList title="Cost Effective"
+                    results={filterResultsByPrice('$')}
+                />
+                <ResultsList title="Bit Pricier"
+                    results={filterResultsByPrice('$$')}
+                />
+                <ResultsList title="Big spender"
+                    results={filterResultsByPrice('$$$')}
+                />
+            </ScrollView>
+        </View>
+        ```
+    2. Alternatively use empty element ```<>``` as container. This is shorthand for ```<React.Fragment>```.
+
+
 # React navigation
 ![](images/react-natigation-types.png)
 
