@@ -150,7 +150,7 @@ const HomeScreen = props => {
     ```
     Here ```counter``` value gets updated but this is not displayed  to user.
 
-## React hooks for state management
+## ```useState``` hook
 ```useState``` hook allows React to observe changes so they can be rendered to the view.
 ```jsx
 import React, { useState } from "react";
@@ -190,7 +190,7 @@ setCounter(count + 1);
 4. A state variable can be passed to a child component as props.
 5. Each copy of a component has its own separate state variables.
 
-## State management in a hierarchy of components
+### State management in a hierarchy of components
 1. Where to create state variables?
 
     Create  state variables in the most parent component which needs to read/write on that state value.
@@ -225,7 +225,7 @@ setCounter(count + 1);
                         onPress={() => onIncrease()} //callback function called
                     />
         ```
-## Reading text
+### Reading text
 In React we do not read a child component's data in a parent component. Instead we create a state variable in the parent which is modified by the child component.
 ```jsx
     const [name, setName] = useState('');
@@ -296,6 +296,34 @@ To read state
 
 //convention
 { type: 'change_red', payload: 15 }
+```
+
+## ```useEffect``` hook
+Allows us to conditionally update state.
+```js
+useEffect(() => {}) // run every time component is rendered
+useEffect(() => {}, []) // run only when component is first rendered
+useEffect(() => {}, [value]) //run when component is first rendered, and when 'value' changes
+```
+
+We want to display some initial values when the SearchScreen component loads. But calling ```searchApi()``` function directly in the component will lead to an infinite loop:
+1. ```searchApi()``` causes state to update.
+2. This causes component to re-render. ```searchApi()``` gets called again.
+
+Its desirable to call ```searchApi()``` just once when component is loaded for first time.
+```jsx
+const SearchScreen = () => {
+    const [results, setResults] = useState([]);
+    const searchApi = async (searchTerm) => {
+        //updates results state
+    }
+    // bad code: infinite loop
+    // searchApi('pasta');
+
+    // good code: searchApi called only once
+    useEffect(() => {
+        searchApi('pasta')
+    }, []);
 ```
 
 # Layout
