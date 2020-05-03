@@ -460,3 +460,16 @@ React navigation comes in 3 modes
 2. **BottomTabNavigator**
 3. **StackNavigator**: Automatically shows back arrow for screens.
 
+## ```withNavigation```
+It is undesirable for a component to intercept ```navigation``` prop if is not using it. But many times we may need to pass this prop to a child component.
+
+```withNavigation``` allows a child component to access navigation props without it being passed all the way down.
+```jsx
+import { withNavigation } from 'react-navigation';
+
+const ResultsList = ({ navigation }) => {
+    //code
+};
+export default withNavigation(ResultsList);
+```
+This way ```navigation``` props are injected into ```ResultsList```.
