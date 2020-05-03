@@ -493,3 +493,39 @@ const ResultsShowScreen = ({ navigation }) => {
     const id = navigation.getParam('id'); //read data
 ```
 Passed data is read using ```navigation.getParam()``` function.
+
+# Provider pattern and Context API
+![](images/provider-pattern.png)
+
+- It solves the problem of **props-drilling**, i.e. when props have to passed through many layers to reach the desired component.
+- In the provider pattern these props are provided by a global object.
+- Earlier this pattern was realized through 3rd party libraries like **Redux**. This can now be achieved through **Context API**.
+
+## Working
+1. Create ```BlogContext``` component which hold the provider and context API. It uses the ```children``` prop to wrap around ```App.js``` and navigation functionality. This way context becomes available everywhere.
+```jsx
+const BlogContext = React.createContext();
+
+// Provider contains values to be distributed
+export const BlogProvider = ({ children }) => {
+    //children prop recieves <App />
+    return (
+        <BlogContext.Provider value={5}>
+            {children}
+        </BlogContext.Provider>
+    )
+};
+
+// Context allows components to access the provider
+export default BlogContext;
+```
+
+2. ```BlogContext``` can now be accessed from any component using ```useContext()```.
+```jsx
+const IndexScreen = () => {
+    const value = useContext(BlogContext);
+    return (
+        <View>
+            <Text>IndexScreen</Text>
+            <Text>Obtained from context: {value}</Text>
+```
