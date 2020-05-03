@@ -473,3 +473,23 @@ const ResultsList = ({ navigation }) => {
 export default withNavigation(ResultsList);
 ```
 This way ```navigation``` props are injected into ```ResultsList```.
+
+## communicating between screens
+```navigation``` prop can be used to pass data between different screens.
+1. ```ResultsList```
+```jsx
+<TouchableOpacity
+    onPress={() => {
+        navigation.navigate(
+            'resultsShow',
+            { id: item.id } // pass data to resultsShow screen
+        )
+    }}
+>
+```
+2. ```ResultsShowScreen```
+```jsx
+const ResultsShowScreen = ({ navigation }) => {
+    const id = navigation.getParam('id'); //read data
+```
+Passed data is read using ```navigation.getParam()``` function.
