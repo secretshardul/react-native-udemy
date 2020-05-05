@@ -1,39 +1,33 @@
 import React, { useState, useReducer } from 'react';
+import createDataContext from './createDataContext';
 
-const BlogContext = React.createContext();
 /**
  * Reducer function
  * @param [{title: 'Blog post #1'}] state
- * @param { type: 'add_post', post: '{title: 'Blog post #2'} } action
+ * @param { type: 'add_post' } action
  */
 const reducer = (state, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case "add_post": {
-            return [...state, action.post];
+            return [...state, { title: `Blog post #${state.length + 1}` }];
         }
         default:
             return state;
     }
 }
 
-// Provider contains values to be distributed
-export const BlogProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, []);
-
-    function addBlogPost() {
-        dispatch({
-            type: 'add_post',
-            post: { title: `Blog post #${state.length + 1}` }
-        })
-    }
-
-    //children prop recieves <App />
-    return (
-        <BlogContext.Provider value={{ data: state, addBlogPost }}>
-            {children}
-        </BlogContext.Provider>
-    )
+/**
+ * @param {dispatch} dispatch createDataContext passes dispatch object.
+ */
+const addBlogPost = (dispatch) => {
+    return () => {
+        dispatch({ type: 'add_post' });
+    };
 };
 
-// Context allows components to access the provider
-export default BlogContext;
+// BlogContext recieves Context, Provider from createDataContext. These objects are used in App.js and IndexScreen.js.
+export const { Context, Provider } = createDataContext(
+    reducer,
+    { addBlogPost }, // action can take multiple functions
+    []
+);

@@ -2,7 +2,7 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import IndexScreen from './src/screens/IndexScreen';
-import { BlogProvider } from './src/context/BlogContext';
+import { Provider as BlogProvider } from './src/context/BlogContext';
 
 const navigator = createStackNavigator(
   {
@@ -16,16 +16,14 @@ const navigator = createStackNavigator(
   }
 );
 
-// export default createAppContainer(navigator);
-
 //for provider pattern
 const App = createAppContainer(navigator);
 
 //BlogProvider wraps stack navigator
 export default () => {
   return (
-    <BlogProvider >
+    <BlogProvider>
       <App />
     </BlogProvider>
-  );
+  )
 };

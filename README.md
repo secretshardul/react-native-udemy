@@ -529,3 +529,60 @@ const IndexScreen = () => {
             <Text>IndexScreen</Text>
             <Text>Obtained from context: {value}</Text>
 ```
+
+## Context generator component
+Sometimes an app may require more than one provider component. We can move common component/provider code in a separate component. This component will be called to create multiple contexts.
+
+**createDataContext.js**
+```jsx
+import React, { useReducer } from 'react';
+
+/**
+ * Automates context creation. This removes need of multiple context files. Every context file has these:
+ * @param reducer
+ * @param actions functions that modify state
+ * @param initialState
+ */
+export default (reducer, actions, initialState) => {
+    const Context = React.createContext();
+
+    const Provider = ({ children }) => {
+        const [state, dispatch] = useReducer(reducer, initialState);
+
+        // actions === { addBlogPost: (dispatch) => { return () => {} } }
+        const boundActions = {};
+
+        for(let key in actions) {
+            // loop over actions. Pass dispatch argument for every action to activate them.
+            boundActions[key] = actions[key](dispatch);
+        }
+        return (
+            <Context.Provider value={{ state, ...boundActions }}>
+                {children}
+            </Context.Provider>
+        );
+    }
+    return { Context, Provider } //recieved by BlogContext.
+}
+```
+This is the context generator. It returns ```Context``` and ```Provider``` objects.
+
+
+**BlogContext.js**
+```jsx
+export const { Context, Provider } = createDataContext(
+    reducer,
+    { addBlogPost }, // action can take multiple functions
+    []
+);
+```
+It calls ```createDataContext``` to create context for blogs. The generated context is used in ```App.js``` and ```IndexScreen.js```. It passes the following to ```createDataContext```:
+1. ```reducer```
+2. ```actions```: Object containing functions which modify state through ```dispatch``` object.
+3. ```initialState```
+
+This is the equivalent to the regular reducer syntax:
+```jsx
+const reducer = (state, action) = {};
+const [state, dispatch] =useReducer(reducer, initialState);
+```
