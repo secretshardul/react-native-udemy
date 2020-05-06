@@ -3,13 +3,23 @@ import createDataContext from './createDataContext';
 
 /**
  * Reducer function
- * @param [{title: 'Blog post #1'}] state
- * @param { type: 'add_post' } action
+ * @param [{ id: 1234, title: 'Blog post #1' }] state
+ * @param { type: 'add_post' || { type: 'delete_post', payload: 1234 } } action
  */
 const reducer = (state, action) => {
     switch (action.type) {
         case "add_post": {
-            return [...state, { title: `Blog post #${state.length + 1}` }];
+            return [...state,
+                {
+                    id: Math.floor(Math.random() * 9999),
+                    title: `Blog post #${state.length + 1}`
+                }];
+        }
+        case "delete_post": {
+            //delete if id present
+            return state.filter((post) => {
+                return post.id !== action.payload
+            })
         }
         default:
             return state;
@@ -25,9 +35,16 @@ const addBlogPost = (dispatch) => {
     };
 };
 
+const deleteBlogPost = (dispatch) => {
+    return (id) => {
+        // console.log(`deleting ${id}`);
+        dispatch({ type: 'delete_post', payload: id })
+    }
+};
+
 // BlogContext recieves Context, Provider from createDataContext. These objects are used in App.js and IndexScreen.js.
 export const { Context, Provider } = createDataContext(
     reducer,
-    { addBlogPost }, // action can take multiple functions
+    { addBlogPost, deleteBlogPost }, // action can take multiple functions
     []
 );
