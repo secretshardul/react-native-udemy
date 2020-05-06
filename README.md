@@ -122,6 +122,12 @@ const HomeScreen = props => {
 />
 ```
 
+### Backward navigation
+```navigation``` array can be popped to go back to last screen.
+```jsx
+navigation.pop();
+```
+
 # State management
 - State system is used to track data which will change over time. On other hand, props are used to pass data from parent to a child.
 - React doesn't automatically update view when variable values are changed.
