@@ -1,10 +1,9 @@
-import React, { useState, useReducer } from 'react';
 import createDataContext from './createDataContext';
 
 /**
  * Reducer function
  * @param [{ id: 1234, title: 'Blog post #1' }] state
- * @param { type: 'add_post' || { type: 'delete_post', payload: 1234 } } action
+ * @param { type, payload } action
  */
 const reducer = (state, action) => {
     switch (action.type) {
@@ -20,6 +19,14 @@ const reducer = (state, action) => {
             //delete if id present
             return state.filter((post) => {
                 return post.id !== action.payload
+            })
+        }
+        case "edit_post": {
+            //edit if id present
+            return state.map((post) => {
+                return (post.id === action.payload.id)
+                    ? action.payload
+                    : post;
             })
         }
         default:
@@ -44,9 +51,17 @@ const deleteBlogPost = (dispatch) => {
     }
 };
 
+const editBlogPost = dispatch => {
+    return async (id, title, content) => {
+        dispatch(
+            { type: 'edit_post', payload: { id, title, content }}
+        );
+    }
+}
+
 // BlogContext recieves Context, Provider from createDataContext. These objects are used in App.js and IndexScreen.js.
 export const { Context, Provider } = createDataContext(
     reducer,
-    { addBlogPost, deleteBlogPost }, // action can take multiple functions
-    []
+    { addBlogPost, deleteBlogPost, editBlogPost }, // action can take multiple functions
+    [{ title: 'TEST POST', content: 'TEST CONTENT', id: 1 }]
 );
