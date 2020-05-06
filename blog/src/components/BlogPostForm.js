@@ -30,6 +30,14 @@ const BlogPostForm = ({ initialValues, onSubmit }) => {
     );
 };
 
+// Set default values for initialValues prop
+BlogPostForm.defaultProps = {
+    initialValues: {
+        title: '',
+        content: ''
+    }
+};
+
 const styles = StyleSheet.create({
     input: {
         fontSize: 18,

@@ -10,7 +10,9 @@ const ComponentsScreen = () => {
     );
 }
 ```
+
 2. **props(properties)**: JSX elements can be modified using props. ```style``` is a prop used above.
+
 3. We can refer to Javascript variables inside JSX blocks using curly braces.
 ```jsx
 const greeting = "hi there";
@@ -21,6 +23,7 @@ return (
     </View>
 );
 ```
+
 4. We can assign JSX elements to a variable, and use this variable in a JSX block.
 ```jsx
 const message = <Text>Welcome to react native!</Text>;
@@ -30,6 +33,17 @@ return (
         {message}
     </View>
 );
+```
+
+5. We can assign default values to props
+```js
+// Set default values for initialValues prop
+BlogPostForm.defaultProps = {
+    initialValues: {
+        title: '',
+        content: ''
+    }
+};
 ```
 
 # React Native basics

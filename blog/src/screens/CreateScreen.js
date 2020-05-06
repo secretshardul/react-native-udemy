@@ -6,8 +6,8 @@ const CreateScreen = ({ navigation }) => {
     const { addBlogPost } = useContext(Context);
 
     return (
+        // Default values used for initialValue prop
         <BlogPostForm
-            initialValues={{ title: '', content: '' }}
             onSubmit={async (title, content) => {
                 await addBlogPost(title, content);
                 navigation.navigate('Index');
