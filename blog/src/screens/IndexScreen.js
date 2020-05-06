@@ -3,35 +3,51 @@ import { Text, View, StyleSheet, FlatList, Button, TouchableOpacity } from 'reac
 import { Context } from '../context/BlogContext';
 import { Feather } from '@expo/vector-icons';
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
     const { state, addBlogPost, deleteBlogPost } = useContext(Context);
 
     return (
         <View>
-            <Text>IndexScreen</Text>
-            <Button onPress={addBlogPost} title="create post"/>
             <FlatList
                 data={state}
                 keyExtractor={(blogPost) => blogPost.title}
                 renderItem={({ item }) => {
                     return (
-                        <View style={styles.row}>
-                            <Text style={styles.title}>{item.title} - {item.id}</Text>
-                            <TouchableOpacity onPress={
-                                () => {
-                                    console.log('clicked ' + item.id);
-                                    deleteBlogPost(item.id);
-
-                                }
+                        <TouchableOpacity onPress={
+                            () => navigation.navigate('Show', { id: item.id })
                             }>
-                                <Feather style={styles.icon} name="trash" />
-                            </TouchableOpacity>
-                        </View>
+                            <View style={styles.row}>
+                                <Text style={styles.title}>{item.title} - {item.id}</Text>
+                                <TouchableOpacity onPress={
+                                    () => {
+                                        console.log('clicked ' + item.id);
+                                        deleteBlogPost(item.id);
+
+                                    }
+                                }>
+                                    <Feather style={styles.icon} name="trash" />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                     );
                 }}
             />
         </View>
     );
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={
+                () => {
+                    navigation.navigate('Create');
+                }
+            }>
+                <Feather name="plus" size={30} />
+            </TouchableOpacity>
+        )
+    };
 };
 
 const styles = StyleSheet.create({

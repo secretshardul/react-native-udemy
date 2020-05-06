@@ -494,6 +494,25 @@ const ResultsShowScreen = ({ navigation }) => {
 ```
 Passed data is read using ```navigation.getParam()``` function.
 
+## Header buttons
+We can add buttons to headers.
+![](images/header-button.png)
+```jsx
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={
+                () => {
+                    navigation.navigate('Create');
+                }
+            }>
+                <Feather name="plus" size={30} />
+            </TouchableOpacity>
+        )
+    };
+};
+```
+
 # Provider pattern and Context API
 ![](images/provider-pattern.png)
 

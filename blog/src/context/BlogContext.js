@@ -12,7 +12,8 @@ const reducer = (state, action) => {
             return [...state,
                 {
                     id: Math.floor(Math.random() * 9999),
-                    title: `Blog post #${state.length + 1}`
+                    title: action.payload.title,
+                    content: action.payload.content,
                 }];
         }
         case "delete_post": {
@@ -30,14 +31,15 @@ const reducer = (state, action) => {
  * @param {dispatch} dispatch createDataContext passes dispatch object.
  */
 const addBlogPost = (dispatch) => {
-    return () => {
-        dispatch({ type: 'add_post' });
+    return async (title, content) => {
+        dispatch(
+            { type: 'add_post', payload: { title, content } }
+        );
     };
 };
 
 const deleteBlogPost = (dispatch) => {
     return (id) => {
-        // console.log(`deleting ${id}`);
         dispatch({ type: 'delete_post', payload: id })
     }
 };
