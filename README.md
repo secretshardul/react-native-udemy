@@ -586,3 +586,18 @@ This is the equivalent to the regular reducer syntax:
 const reducer = (state, action) = {};
 const [state, dispatch] =useReducer(reducer, initialState);
 ```
+
+# Terminologies
+## Controlled vs uncontrolled components
+1. **Controlled component**: It takes its current value through props and notifies changes through callbacks like ```onChange```. A parent component *controls it* by passing its state variables to the child and handling callbacks.
+2. **Uncontrolled component**: Stores state internally. This state is queried whenever needed.
+
+Use controlled components in most cases.
+```js
+// Controlled:
+<input type="text" value={value} onChange={handleChange} />
+
+// Uncontrolled:
+<input type="text" defaultValue="foo" ref={inputRef} />
+// Use `inputRef.current.value` to read the current value of <input>
+```
